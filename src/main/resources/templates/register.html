@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>회원가입</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -22,22 +20,38 @@
     <form id="registrationForm" action="/users/register" method="post" class="mt-4">
         <div class="form-group">
             <label for="userName">회원 이름</label>
-            <input type="text" class="form-control" id="userName" name="userName" required>
+            <input type="text" class="form-control" id="userName" name="userName" th:value="${userDTO?.userName}" required>
         </div>
         <div class="form-group">
             <label for="userEmail">이메일</label>
             <input type="email" class="form-control" id="userEmail" name="userEmail" th:value="${userDTO?.userEmail}" required>
             <div th:if="${emailExists}" class="alert alert-danger" role="alert">
-                이미 존재하는 이메일 입니다.
+                이미 가입된 이메일 입니다.
             </div>
         </div>
         <div class="form-group">
-            <label for="userPhone">전화번호</label>
-            <input type="text" class="form-control" id="userPhone" name="userPhone" required>
+            <label for="phonePrefix">전화번호</label>
+            <div class="input-group">
+                <select class="custom-select" id="phonePrefix" name="phonePrefix" required>
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="016">016</option>
+                    <option value="019">019</option>
+                    <option value="02">02</option>
+                </select>
+                <div class="input-group-append">
+                    <span class="input-group-text">-</span>
+                </div>
+                <input type="text" class="form-control" id="phoneMiddle" name="phoneMiddle" required pattern="\d{3,4}" title="3~4자리 숫자를 입력해주세요.">
+                <div class="input-group-append">
+                    <span class="input-group-text">-</span>
+                </div>
+                <input type="text" class="form-control" id="phoneLast" name="phoneLast" required pattern="\d{4}" title="4자리 숫자를 입력해주세요.">
+            </div>
         </div>
         <div class="form-group">
             <label for="userPW">비밀번호</label>
-            <input type="password" class="form-control" id="userPW" name="userPW" required>
+            <input type="password" class="form-control" id="userPW" name="userPW" th:value="${userDTO?.userPW}" required>
         </div>
         <div class="form-group">
             <label for="upwConfirm">비밀번호 확인</label>
@@ -45,19 +59,10 @@
         </div>
         <div class="form-group">
             <label for="userBirth">생년월일</label>
-            <input type="date" class="form-control" id="userBirth" name="userBirth" required>
+            <input type="date" class="form-control" id="userBirth" name="userBirth" th:value="${userDTO?.userBirth}" required>
         </div>
-        <div class="form-group">
-            <label>성별</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="male" name="userGender" value="M" required>
-                <label class="form-check-label" for="male">남자</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="female" name="userGender" value="F" required>
-                <label class="form-check-label" for="female">여자</label>
-            </div>
-        </div>
+        <hr class="my-4">
+        <!-- 약관 동의 부분 시작 -->
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="agreeAll" required>
             <label class="form-check-label" for="agreeAll">모든 약관에 동의합니다.</label>
@@ -72,20 +77,12 @@
             <label class="form-check-label" for="terms2">[필수] 포폴쇼핑몰 이용약관 동의</label>
         </div>
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="terms3" required>
-            <label class="form-check-label" for="terms2">[필수] 전자금융거래 이용약관 동의</label>
-        </div>
-        <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="terms4" required>
             <label class="form-check-label" for="terms2">[필수] 개인정보 수집 및 이용 동의</label>
         </div>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="terms5" required>
             <label class="form-check-label" for="terms2">[필수] 개인정보 제3자 제공 동의</label>
-        </div>
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="terms6" required>
-            <label class="form-check-label" for="terms2">[필수] 전자금융거래 이용약관 동의</label>
         </div>
         <!-- 기타 체크박스 필드 -->
         <button type="submit" class="btn btn-primary">동의하고 가입하기</button>
@@ -95,34 +92,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    // 스크립트 수정
-    document.getElementById('agreeAll').addEventListener('change', function() {
-        // '모든 항목에 동의합니다' 체크박스를 제외한 모든 체크박스를 선택합니다.
-        var allCheckboxes = document.querySelectorAll('.form-check-input:not(#agreeAll)');
-        // 성별 체크박스를 제외한 체크박스에 대해 동작합니다.
-        allCheckboxes.forEach(function(checkbox) {
-            if (checkbox !== document.getElementById('male') && checkbox !== document.getElementById('female')) {
-                checkbox.checked = this.checked;
-            }
-        }.bind(this));
-    });
-
-    document.getElementById('agreeAll').addEventListener('change', function() {
-        var allCheckboxes = document.querySelectorAll('#terms1, #terms2, #terms3, #terms4, #terms5, #terms6');
-        allCheckboxes.forEach(function(checkbox) {
-            checkbox.checked = this.checked;
-        }, this);
-    });
-
-    document.getElementById('registrationForm').addEventListener('submit', function(event) {
-        var requiredCheckboxes = document.querySelectorAll('#terms1, #terms2, #terms3, #terms4, #terms5, #terms6');
-        var allChecked = Array.from(requiredCheckboxes).every(checkbox => checkbox.checked);
-        if (!allChecked) {
-            alert('필수 항목에 모두 동의해주세요');
-            event.preventDefault();
-        }
-    });
-</script>
+<script src="/js/checkBox.js"></script>
+<script src="/js/formValidation.js"></script>
 </body>
 </html>

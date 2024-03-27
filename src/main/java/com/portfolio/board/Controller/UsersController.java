@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -28,13 +25,18 @@ public class UsersController {
         return "register";
     }
     @PostMapping("/register")
-    public String save(@ModelAttribute UserDTO userDTO, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute UserDTO userDTO,
+                       @RequestParam("phonePrefix") String phonePrefix,
+                       @RequestParam("phoneMiddle") String phoneMiddle,
+                       @RequestParam("phoneLast") String phoneLast,
+                       RedirectAttributes redirectAttributes) {
         if (userService.isEmailExists(userDTO.getUserEmail())) {
+            userDTO.setUserEmail(""); // 이메일 필드만 초기화
             redirectAttributes.addFlashAttribute("emailExists", true);
-            redirectAttributes.addFlashAttribute("userDTO", userDTO); // 사용자가 입력한 값들을 다시 뷰로 전달
+            redirectAttributes.addFlashAttribute("userDTO", userDTO); // 변경된 userDTO 전달
             return "redirect:/users/register";
         }
-        userService.save(userDTO);
+        userService.save(userDTO, phonePrefix, phoneMiddle, phoneLast);
         return "redirect:/users/login";
     }
 

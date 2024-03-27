@@ -14,7 +14,11 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-    public void save(UserDTO userDTO) {
+    public void save(UserDTO userDTO, String phonePrefix, String phoneMiddle, String phoneLast) {
+        // 전화번호 조합
+        String formattedPhone = String.format("%s-%s-%s", phonePrefix, phoneMiddle, phoneLast);
+        userDTO.setUserPhone(formattedPhone);
+
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);
         userRepository.save(userEntity);
     }

@@ -18,8 +18,7 @@ public class UserDTO {
     private String userPhone;
     private String userPW;
     private String userEmail;
-    private String userGender;
-    private Date userBirth;
+    private String userBirth;
 
     public static UserDTO toUserDTO(UserEntity userEntity) {
         UserDTO userDTO = new UserDTO();
@@ -28,7 +27,6 @@ public class UserDTO {
         userDTO.setUserPW(userEntity.getUserPW());
         userDTO.setUserPhone(userEntity.getUserPhone());
         userDTO.setUserBirth(userEntity.getUserBirth());
-        userDTO.setUserGender(userEntity.getUserGender());
         return userDTO;
     }
 }

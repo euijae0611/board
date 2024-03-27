@@ -29,10 +29,7 @@ public class UserEntity {
     private String userName;
 
     @Column
-    private Date userBirth;
-
-    @Column
-    private String userGender;
+    private String userBirth;
 
     public static UserEntity toUserEntity(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
@@ -41,8 +38,6 @@ public class UserEntity {
         userEntity.setUserPW(userDTO.getUserPW());
         userEntity.setUserPhone(userDTO.getUserPhone());
         userEntity.setUserBirth(userDTO.getUserBirth());
-        userEntity.setUserGender(userDTO.getUserGender());
         return userEntity;
     }
-
 }
