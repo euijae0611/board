@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 500px;
+        }
+        .icon-img {
+            width: 24px;
+            height: 24px;
+        }
+        .icon-text {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/users/login" method="post">
+                        <!-- 이메일 입력 -->
+                        <div class="form-group">
+                            <label for="userEmail">아이디(이메일)</label>
+                            <input type="email" class="form-control" id="userEmail" name="userEmail" required>
+                        </div>
+                        <!-- 비밀번호 입력 -->
+                        <div class="form-group">
+                            <label for="userPW">비밀번호</label>
+                            <input type="password" class="form-control" id="userPW" name="userPW" required>
+                        </div>
+                        <div class="form-row align-items-center justify-content-between">
+                            <!-- 로그인 유지 -->
+                            <div class="col-auto">
+                                <div class="form-check mb-2">
+                                    <input type="checkbox" class="form-check-input" id="keepLoggedIn">
+                                    <label class="form-check-label" for="keepLoggedIn">자동 로그인</label>
+                                </div>
+                            </div>
+                            <!-- 아이디, 비밀번호 찾기 -->
+                            <div class="col-auto text-right">
+                                <a href="/users/find-id-pw" class="text-info">아이디, 비밀번호 찾기 ></a>
+                            </div>
+                        </div>
+                        <!-- 로그인 버튼 -->
+                        <button type="submit" class="btn btn-primary btn-block mb-2">로그인</button>
+                        <!-- 회원가입 버튼 -->
+                        <a href="/users/register" class="btn btn-secondary btn-block">회원가입</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
