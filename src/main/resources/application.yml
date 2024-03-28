@@ -7,6 +7,10 @@ spring:
     username: root
     password: P@ssw0rd9495
     driver-class-name: com.mysql.cj.jdbc.Driver
+#  security:
+#    user:
+#      name: test
+#      password: test1234
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false

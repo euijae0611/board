@@ -5,8 +5,6 @@ import com.portfolio.board.Service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -40,7 +38,7 @@ public class UsersController {
         return "redirect:/users/login";
     }
 
-    @PostMapping("/login")
+//    @PostMapping("/login")
     public String donelogin(@ModelAttribute UserDTO userDTO, HttpSession session) {
         UserDTO loginResult = userService.login(userDTO);
         if(loginResult != null) {

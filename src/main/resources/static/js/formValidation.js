@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
     phoneLastError.style.display = 'none';
 
     function validatePassword() {
-        if (password.value !== confirmPassword.value && confirmPassword.value.length>=1) {
+        if (password.value !== confirmPassword.value) {
             passwordMismatchMessage.style.display = 'block';
         } else {
-            if(password.value && confirmPassword.value.length>=1) {
+            if(password.value && confirmPassword.value.length >= 1) {
                 passwordMismatchMessage.style.display = 'block';
                 passwordMismatchMessage.style.color = 'green';
                 passwordMismatchMessage.textContent = '비밀번호가 서로 일치합니다.';
@@ -60,12 +60,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // phoneLast.oninput = validatePhonePart;
 
     form.addEventListener('submit', function(event) {
-        if (password.value !== confirmPassword.value ||
-            phoneMiddle.value.length > 4 ||
-            phoneLast.value.length > 4) {
+        if (phoneMiddle.value.length > 4 || phoneLast.value.length > 4) {
             event.preventDefault();
-            alert('폼에 오류가 있습니다. 확인해 주세요.');
+            alert('전화번호에 오류가 발생했습니다.');
             return false;
         }
     });
+
+    form.addEventListener('submit',function(e){
+        if(password.value !== confirmPassword.value) {
+            e.preventDefault();
+            alert('비밀번호가 서로 일치하지 않습니다.')
+        }
+    })
 });
