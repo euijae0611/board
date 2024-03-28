@@ -38,7 +38,7 @@ public class UsersController {
         return "redirect:/users/login";
     }
 
-//    @PostMapping("/login")
+    @PostMapping("/login")
     public String donelogin(@ModelAttribute UserDTO userDTO, HttpSession session) {
         UserDTO loginResult = userService.login(userDTO);
         if(loginResult != null) {

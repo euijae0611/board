@@ -104,6 +104,14 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+.star-rating .fas {
+  color: #FFD700; /* 노란색 */
+}
+
+.star-rating .far {
+  color: #FFD700; /* 노란색으로 빈 별, 색상을 조정하여 빈 별의 스타일을 변경할 수 있음 */
+}
+
 hr {
   margin: 1rem 0;
   color: inherit;

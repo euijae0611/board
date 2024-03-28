@@ -40,7 +40,7 @@
                             <!-- 로그인 유지 -->
                             <div class="col-auto">
                                 <div class="form-check mb-2">
-                                    <input type="checkbox" class="form-check-input" id="keepLoggedIn">
+                                    <input type="checkbox" class="form-check-input" id="keepLoggedIn" name="remember-me">
                                     <label class="form-check-label" for="keepLoggedIn">자동 로그인</label>
                                 </div>
                             </div>
@@ -50,9 +50,9 @@
                             </div>
                         </div>
                         <!-- 로그인 버튼 -->
-                        <button type="submit" class="btn btn-primary btn-block mb-2">로그인</button>
+                        <button type="submit" class="btn btn-primary btn-block mb-2" id="loggedIn">로그인</button>
                         <!-- 회원가입 버튼 -->
-                        <a href="/users/register" class="btn btn-secondary btn-block">회원가입</a>
+                        <a href="/users/register" class="btn btn-secondary btn-block" id="registered">회원가입</a>
                     </form>
                 </div>
             </div>
@@ -60,6 +60,7 @@
     </div>
 </div>
 <!-- Bootstrap JS and dependencies -->
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

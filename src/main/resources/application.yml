@@ -7,6 +7,11 @@ spring:
     username: root
     password: P@ssw0rd9495
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
 #  security:
 #    user:
 #      name: test
