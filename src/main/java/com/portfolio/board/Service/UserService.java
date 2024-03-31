@@ -4,13 +4,17 @@ package com.portfolio.board.Service;
 import com.portfolio.board.DTO.UserDTO;
 import com.portfolio.board.Entity.UserEntity;
 import com.portfolio.board.Repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
+@Transactional
 public class UserService {
     private final UserRepository userRepository;
 
@@ -44,4 +48,10 @@ public class UserService {
     public boolean isEmailExists(String email) {
         return userRepository.existsByUserEmail(email);
     }
+
+    public UserDTO autoLogin(String userEmail) {
+        Optional<UserEntity> userEntityOptional = userRepository.findByUserEmail(userEmail);
+        return userEntityOptional.map(UserDTO::toUserDTO).orElse(null);
+    }
+
 }

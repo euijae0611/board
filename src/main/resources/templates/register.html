@@ -24,11 +24,25 @@
         </div>
         <div class="form-group">
             <label for="userEmail">이메일</label>
-            <input type="email" class="form-control" id="userEmail" name="userEmail" th:value="${userDTO?.userEmail}" required>
-            <div th:if="${emailExists}" class="alert alert-danger" role="alert">
-                이미 가입된 이메일 입니다.
+            <div class="input-group mb-3">
+                <input type="email" class="form-control" id="userEmail" name="userEmail" required>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="emailAuthBtn">이메일 인증</button>
+                </div>
             </div>
+            <div id="verificationInput" class="mb-3" style="display: none;">
+                <label for="verificationCode">인증번호</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="verificationCode" name="verificationCode" placeholder="인증 코드 입력" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="verifyBtn">확인</button>
+                    </div>
+                </div>
+            </div>
+            <div id="emailFeedback" class="alert" role="alert" style="display: none;"></div>
+            <div id="timerContainer" style="color: red; font-weight: bold; display: none;"><span id="timer"></span></div>
         </div>
+
         <div class="form-group">
             <label for="phonePrefix">전화번호</label>
             <div class="input-group">
@@ -89,6 +103,7 @@
     </form>
 </div>
 <!-- Bootstrap JS and jQuery -->
+<script src="/js/scripts.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
