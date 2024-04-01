@@ -1,16 +1,13 @@
 package com.portfolio.board.Controller;
 
 import com.portfolio.board.DTO.UserDTO;
-import com.portfolio.board.Service.EmailService;
 import com.portfolio.board.Service.UserService;
 import com.portfolio.board.Service.VerificationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,15 +23,12 @@ public class UsersController {
     private final UserService userService;
 
     @Autowired
-    private EmailService emailService;
-
-    @Autowired
     private VerificationService verificationService;
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String login() {
+//        return "login";
+//    }
     @GetMapping("/register")
     public String register() {
         return "register";
@@ -56,11 +50,11 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public String dologin(@ModelAttribute UserDTO userDTO, @RequestParam(value = "remember-me", required = false) String rememberMe, HttpSession session, HttpServletResponse response) {
+    public String dologin(@ModelAttribute UserDTO userDTO, @RequestParam(value = "remember-me", required = false) String rememberMe, HttpSession session, HttpServletResponse response, RedirectAttributes redirectAttributes) {
         UserDTO loginResult = userService.login(userDTO);
         if(loginResult != null) {
-            session.setAttribute("loginEmail",loginResult.getUserEmail());
-            session.setAttribute("loginName",loginResult.getUserName());
+            session.setAttribute("loginEmail", loginResult.getUserEmail());
+            session.setAttribute("loginName", loginResult.getUserName());
             // 자동 로그인 체크박스 확인
             if ("true".equals(rememberMe)) {
                 Cookie autoLoginCookie = new Cookie("autoLogin", loginResult.getUserEmail());
@@ -68,11 +62,12 @@ public class UsersController {
                 autoLoginCookie.setPath("/");
                 response.addCookie(autoLoginCookie);
             }
-            return "redirect:/";
+            return "redirect:/"; // 로그인 성공 시 메인 페이지로 리다이렉트
         } else {
-
-            return "redirect:/users/login";
+            // 로그인 실패 시 로그인 페이지로 리다이렉트하고 에러 메시지 전달
+            redirectAttributes.addFlashAttribute("loginError", "잘못된 이메일 주소 또는 비밀번호입니다. 다시 시도해 주세요.");
         }
+        return "redirect:/";
     }
 
     @GetMapping("/logout")
