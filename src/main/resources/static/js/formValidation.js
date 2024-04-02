@@ -65,12 +65,16 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('전화번호에 오류가 발생했습니다.');
             return false;
         }
-    });
-
-    form.addEventListener('submit',function(e){
         if(password.value !== confirmPassword.value) {
             e.preventDefault();
             alert('비밀번호가 서로 일치하지 않습니다.')
         }
-    })
+    });
+
+    // form.addEventListener('submit',function(e){
+    //     if(password.value !== confirmPassword.value) {
+    //         e.preventDefault();
+    //         alert('비밀번호가 서로 일치하지 않습니다.')
+    //     }
+    // })
 });

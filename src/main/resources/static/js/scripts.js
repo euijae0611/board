@@ -1,40 +1,63 @@
 document.addEventListener('DOMContentLoaded', function() {
     var emailAuthBtn = document.getElementById('emailAuthBtn');
+    var container = document.getElementById('emailFeedback');
+    var loading = document.getElementById('loading');
     emailAuthBtn.addEventListener('click', function() {
         var userEmail = document.getElementById('userEmail').value;
         if (!userEmail) {
-            alert('이메일 주소를 입력해주세요.');
+            // showMessage('이메일 주소를 입력해주세요.'); // 메시지를 직접 표시하는 함수 호출
+            container.style.display = 'block';
+            container.innerText = '이메일 주소를 입력해주세요.';
+            container.style.color = 'red';
             return;
+        } else{
+            container.style.display = 'none';
         }
+        loading.style.display = 'block';
+
         fetch('/users/check-email', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'userEmail=' + encodeURIComponent(userEmail)
+            body: 'userEmail=' + encodeURIComponent(userEmail),
         })
             .then(response => response.json())
             .then(data => {
+                loading.style.display = 'none';
                 if (data.exists) {
-                    alert('이미 가입된 이메일입니다.');
+                    // showMessage('이미 가입된 이메일입니다.'); // 메시지를 직접 표시하는 함수 호출
+                    container.innerText = '이미 가입된 이메일입니다.';
+                    container.style.display = 'block'
+                    container.style.color = 'red';
                 } else {
-                    alert('인증 이메일이 전송되었습니다. 이메일을 확인해주세요.');
-                    showVerificationInput(); // 인증 번호 입력란과 확인 버튼을 표시
+                    // showMessage('인증 이메일이 전송되었습니다. 이메일을 확인해주세요.');
+                    container.innerText = '인증 이메일이 전송되었습니다. 이메일을 확인해주세요.';
+                    container.style.color = 'green';
+                    showVerificationInput();
                     startTimer(); // 타이머 시작
                     document.getElementById('emailAuthBtn').style.display = 'none'; // 이메일 인증 버튼 숨기기
                     document.getElementById('userEmail').disabled = true; // 이메일 입력칸 비활성화
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('이메일 인증 요청 중 오류가 발생했습니다.');
+                loading.style.display = 'none';
+                console.error('에러가 발생했습니다 : ', error);
+                // showMessage('이메일 인증 요청 중 오류가 발생했습니다.'); // 메시지를 직접 표시하는 함수 호출
+                container.innerText = '이메일 인증 요청 중 오류가 발생했습니다.';
+                container.style.display = 'block';
+                container.style.color = 'red';
             });
     });
 });
 
 function showVerificationInput() {
-    document.getElementById('verificationInput').style.display = 'block'; // 인증 번호 입력란과 확인 버튼을 표시
+    document.getElementById('verificationInput').style.display = 'block';
 }
+
+// function showMessage(message) {
+//     alert(message);
+// }
 
 document.getElementById('verifyBtn').addEventListener('click', function() {
     verifyCode();
@@ -43,6 +66,7 @@ document.getElementById('verifyBtn').addEventListener('click', function() {
 function verifyCode() {
     var inputCode = document.getElementById('verificationCode').value;
     var userEmail = document.getElementById('userEmail').value;
+    var container = document.getElementById('emailFeedback');
 
     fetch('/verify-code', {
         method: 'POST',
@@ -62,7 +86,6 @@ function verifyCode() {
         })
         .then(data => {
             // 인증 성공 시
-            var container = document.getElementById('emailFeedback');
             container.style.display = 'block';
             container.innerHTML = '<p class="text-success">인증이 완료되었습니다.</p>';
             document.getElementById('verificationInput').style.display = 'none'; // 인증번호 입력란 숨기기

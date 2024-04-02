@@ -30,7 +30,11 @@
                     <button class="btn btn-outline-secondary" type="button" id="emailAuthBtn">이메일 인증</button>
                 </div>
             </div>
-            <div id="emailFeedback" class="alert" role="alert" style="display: none;"></div>
+            <!-- 동적으로 생기는 태그들 -->
+
+<!--            <div id="emailFeedback" class="alert" role="alert" style="display: none; font-weight: bold" ></div>-->
+            <div id="loading" style="display:none;">이메일을 보내는 중입니다. 잠시만 기다려주세요.</div>
+            <div id="emailFeedback" class="alert" style="display: none; font-weight: bold" ></div>
             <div id="verificationInput" class="mb-3" style="display: none;">
                 <label for="verificationCode">인증번호</label>
                 <div class="input-group">
@@ -41,6 +45,8 @@
                 </div>
             </div>
             <div id="timerContainer" style="color: red; font-weight: bold; display: none;"><span id="timer"></span></div>
+
+
         </div>
 
         <div class="form-group">

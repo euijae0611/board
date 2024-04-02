@@ -11,11 +11,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class EmailService {
+
     @Autowired
     private JavaMailSender mailSender;
-
-    // Send verification email with the generated code
-    public void sendVerificationEmail(String toEmail, String code) {
+    public void sendVerificationEmail(String email, String code) {
         final String subject = "IT Portfolio Mall 회원가입 인증";
         final String content = "인증번호는 " + code + " 입니다.";
 
@@ -23,7 +22,7 @@ public class EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
 
         try {
-            helper.setTo(toEmail);
+            helper.setTo(email);
             helper.setSubject(subject);
             helper.setText(content);
 
