@@ -10,12 +10,13 @@ spring:
       ddl-auto: update
   thymeleaf:
     cache: false
+
   h2:
     console:
       enabled: false
 
   profiles:
-    include: inf
+    include: info
 
 logging:
   level:
